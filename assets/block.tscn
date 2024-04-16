@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://6wyp0ab0kdmy"]
+
+[ext_resource type="Script" path="res://scripts/block.gd" id="1_mc5yw"]
+[ext_resource type="Texture2D" uid="uid://blpsmfngmy7g0" path="res://textures/block.tres" id="2_geook"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lqh2n"]
+size = Vector2(86, 87)
+
+[node name="Block" type="Node2D"]
+scale = Vector2(0.345, 0.345)
+script = ExtResource("1_mc5yw")
+
+[node name="TextureSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_geook")
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="."]
+shape = SubResource("RectangleShape2D_lqh2n")

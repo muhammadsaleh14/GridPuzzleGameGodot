@@ -1,0 +1,107 @@
+[gd_scene load_steps=3 format=3 uid="uid://8k8cabun1w3y"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_ynhme"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ohkry"]
+size = Vector2(70, 30)
+
+[node name="level" type="Node2D"]
+script = ExtResource("1_ynhme")
+
+[node name="Blocks" type="Node2D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="SubmitMarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -31.5
+offset_right = 31.5
+offset_bottom = 31.0
+grow_horizontal = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -0.5
+offset_right = 0.5
+offset_bottom = 24.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="SubmitNode2D" type="Node2D" parent="."]
+
+[node name="SubmitButton" type="TouchScreenButton" parent="SubmitNode2D"]
+shape = SubResource("RectangleShape2D_ohkry")
+
+[node name="ColorRect" type="ColorRect" parent="SubmitNode2D/SubmitButton"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = -15.0
+offset_right = 35.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.129412, 0.129412, 1)
+
+[node name="Label" type="Label" parent="SubmitNode2D/SubmitButton"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -27.5
+offset_top = -11.5
+offset_right = 27.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.545098, 0.752941, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "Submit"
+
+[node name="RestartNode2D" type="Node2D" parent="."]
+
+[node name="RestartButton" type="TouchScreenButton" parent="RestartNode2D"]
+shape = SubResource("RectangleShape2D_ohkry")
+
+[node name="ColorRect" type="ColorRect" parent="RestartNode2D/RestartButton"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.129412, 0.129412, 1)
+
+[node name="RestartLabel" type="Label" parent="RestartNode2D/RestartButton"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.545098, 0.752941, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "Retry"
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="SubmitNode2D/SubmitButton" to="." method="_on_submit_button_pressed"]
+[connection signal="pressed" from="RestartNode2D/RestartButton" to="." method="_on_restart_button_pressed"]

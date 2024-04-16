@@ -1,0 +1,12 @@
+res://main.tscn
+res://shaders/block.gdshader
+res://shaders/incorrect.gdshader
+res://assets/block.tscn
+res://scripts/test.gd
+res://shaders/wrong_selection.gdshader
+res://assets/test.tscn
+res://shaders/missed_selection.gdshader
+res://scripts/block.gd
+res://scripts/main.gd
+res://shaders/correct_shader.gdshader
+res://shaders/correct_selection.gdshader
