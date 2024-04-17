@@ -3,7 +3,7 @@ extends Node2D
 var wrong_selection = preload("res://shaders/wrong_selection.gdshader")
 var invert_shader = preload("res://shaders/block.gdshader")
 var missed_selection = preload("res://shaders/missed_selection.gdshader")
-var correct_selection = preload("res://shaders/correct_shader.gdshader")
+var correct_selection = preload("res://shaders/correct_selection.gdshader")
 
 
 # Called when the node enters the scene tree for the first time.

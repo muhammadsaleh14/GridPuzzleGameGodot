@@ -1,0 +1,97 @@
+[gd_scene load_steps=6 format=3 uid="uid://dko01urihrmd0"]
+
+[ext_resource type="Texture2D" uid="uid://blpsmfngmy7g0" path="res://textures/block.tres" id="1_6hca5"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_enbc7"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_6eymw"]
+offsets = PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.6, 0.9, 0.989011, 1)
+colors = PackedColorArray(0.109531, 0.691336, 1.92523e-07, 1, 0.164706, 0.654902, 0, 1, 0.223055, 0.618853, 0.242034, 1, 0.623529, 0.0509804, 0.760784, 0.682353, 0.310937, 0.43005, 0.484068, 1, 0.398818, 0.241247, 0.726103, 1, 0.898039, 0, 0.203922, 1, 0.898039, 0, 0.203922, 1, 1, 1, 1, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rwu4h"]
+gradient = SubResource("Gradient_6eymw")
+width = 100
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_esn15"]
+lifetime_randomness = 0.9
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(200, 0, 1)
+direction = Vector3(0, 1, 0)
+spread = 0.0
+flatness = 1.0
+initial_velocity_min = 20.0
+initial_velocity_max = 30.0
+angular_velocity_max = 30.0
+gravity = Vector3(0, 98, 0)
+scale_min = 0.3
+scale_max = 0.5
+color_ramp = SubResource("GradientTexture1D_rwu4h")
+hue_variation_max = 1.0
+anim_speed_max = 2.0
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Node2D"]
+material = SubResource("CanvasItemMaterial_enbc7")
+position = Vector2(184, -75)
+amount = 60
+process_material = SubResource("ParticleProcessMaterial_esn15")
+texture = ExtResource("1_6hca5")
+lifetime = 7.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.0
+offset_top = -46.5
+offset_right = 68.0
+offset_bottom = 46.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/MarginContainer2"]
+layout_mode = 2
+text = "Start"
+
+[node name="MarginContainer3" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Settings" type="Button" parent="VBoxContainer/MarginContainer3"]
+layout_mode = 2
+text = "Settings"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -68.0
+offset_right = 68.0
+offset_bottom = 23.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+text = "Grid Puzzle Game"
+horizontal_alignment = 1
