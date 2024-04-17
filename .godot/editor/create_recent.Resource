@@ -1,2 +1,4 @@
+GDScript
+Resource
 Shader
 ShaderMaterial

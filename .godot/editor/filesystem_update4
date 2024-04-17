@@ -8,3 +8,8 @@ res://main.tscn
 res://assets/block.tscn
 res://assets/main_menu.tscn
 res://textures/block.tres
+res://assets/settings.tscn
+res://scripts/settings.gd
+res://resources/user_preferences.gd
+res://scripts/main.gd
+res://scripts/main_menu.gd

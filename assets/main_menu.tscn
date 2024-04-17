@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dko01urihrmd0"]
+[gd_scene load_steps=7 format=3 uid="uid://dko01urihrmd0"]
 
 [ext_resource type="Texture2D" uid="uid://blpsmfngmy7g0" path="res://textures/block.tres" id="1_6hca5"]
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_8447g"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_enbc7"]
 particles_animation = true
@@ -13,7 +14,7 @@ offsets = PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.6, 0.9, 0.989011, 1)
 colors = PackedColorArray(0.109531, 0.691336, 1.92523e-07, 1, 0.164706, 0.654902, 0, 1, 0.223055, 0.618853, 0.242034, 1, 0.623529, 0.0509804, 0.760784, 0.682353, 0.310937, 0.43005, 0.484068, 1, 0.398818, 0.241247, 0.726103, 1, 0.898039, 0, 0.203922, 1, 0.898039, 0, 0.203922, 1, 1, 1, 1, 1)
 metadata/_snap_enabled = true
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_rwu4h"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_lk1rg"]
 gradient = SubResource("Gradient_6eymw")
 width = 100
 
@@ -31,7 +32,7 @@ angular_velocity_max = 30.0
 gravity = Vector3(0, 98, 0)
 scale_min = 0.3
 scale_max = 0.5
-color_ramp = SubResource("GradientTexture1D_rwu4h")
+color_ramp = SubResource("GradientTexture1D_lk1rg")
 hue_variation_max = 1.0
 anim_speed_max = 2.0
 
@@ -42,6 +43,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_8447g")
 
 [node name="Node2D" type="Node2D" parent="."]
 
@@ -70,7 +72,7 @@ grow_vertical = 2
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="VBoxContainer/MarginContainer2"]
+[node name="Start" type="Button" parent="VBoxContainer/MarginContainer2"]
 layout_mode = 2
 text = "Start"
 
@@ -95,3 +97,6 @@ grow_horizontal = 2
 layout_mode = 2
 text = "Grid Puzzle Game"
 horizontal_alignment = 1
+
+[connection signal="pressed" from="VBoxContainer/MarginContainer2/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer3/Settings" to="." method="_on_settings_pressed"]

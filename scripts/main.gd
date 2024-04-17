@@ -1,5 +1,7 @@
 extends Node2D
 
+var user_prefs: UserPreferences
+
 @export var grid_size = Vector2(5, 5)
 @export var num_blocks_to_highlight = 5  # Number of rows and columns
 @export var level_time = 2
@@ -16,6 +18,12 @@ var select_mode = false
  
 
 func _ready():
+	user_prefs = UserPreferences.load_or_create()
+	grid_size.x = user_prefs.columns
+	grid_size.y = user_prefs.rows
+	level_time = user_prefs.time
+	num_blocks_to_highlight = user_prefs.boxes
+	
 	var node: Node2D = block.instantiate()
 	var texture_sprite: Sprite2D = node.get_node("TextureSprite")
 	#expand to cover 3/4 of screen

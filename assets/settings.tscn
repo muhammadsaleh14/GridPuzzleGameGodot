@@ -1,0 +1,225 @@
+[gd_scene load_steps=8 format=3 uid="uid://b7bkq10h20ttv"]
+
+[ext_resource type="Script" path="res://scripts/settings.gd" id="1_r7hsq"]
+[ext_resource type="Texture2D" uid="uid://blpsmfngmy7g0" path="res://textures/block.tres" id="2_2tbdu"]
+[ext_resource type="Script" path="res://addons/SliderLabel/SliderLabel.gd" id="2_d0ghn"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_geg0i"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_we8ne"]
+offsets = PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.6, 0.9, 0.989011, 1)
+colors = PackedColorArray(0.109531, 0.691336, 1.92523e-07, 1, 0.164706, 0.654902, 0, 1, 0.223055, 0.618853, 0.242034, 1, 0.623529, 0.0509804, 0.760784, 0.682353, 0.310937, 0.43005, 0.484068, 1, 0.398818, 0.241247, 0.726103, 1, 0.898039, 0, 0.203922, 1, 0.898039, 0, 0.203922, 1, 1, 1, 1, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rwu4h"]
+gradient = SubResource("Gradient_we8ne")
+width = 100
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_m36al"]
+lifetime_randomness = 0.9
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(200, 0, 1)
+direction = Vector3(0, 1, 0)
+spread = 0.0
+flatness = 1.0
+initial_velocity_min = 20.0
+initial_velocity_max = 30.0
+angular_velocity_max = 30.0
+gravity = Vector3(0, 98, 0)
+scale_min = 0.3
+scale_max = 0.5
+color_ramp = SubResource("GradientTexture1D_rwu4h")
+hue_variation_max = 1.0
+anim_speed_max = 2.0
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r7hsq")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Node2D"]
+material = SubResource("CanvasItemMaterial_geg0i")
+position = Vector2(184, -75)
+amount = 60
+process_material = SubResource("ParticleProcessMaterial_m36al")
+texture = ExtResource("2_2tbdu")
+lifetime = 7.0
+preprocess = 10.0
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "Settings"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer4"]
+layout_mode = 2
+
+[node name="Time" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer4/VBoxContainer"]
+layout_mode = 2
+text = "Time"
+horizontal_alignment = 1
+
+[node name="TimeSlider" type="HSlider" parent="MarginContainer/VBoxContainer/MarginContainer4/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 25.0
+value = 1.0
+
+[node name="SliderLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer4/VBoxContainer/TimeSlider"]
+layout_mode = 2
+offset_left = 146.0
+offset_top = 20.0
+offset_right = 174.0
+offset_bottom = 43.0
+size_flags_horizontal = 4
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_d0ghn")
+placement = 1
+separation = 0
+metadata/_edit_initialized_ = true
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+
+[node name="BoxesHighlighted" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+layout_mode = 2
+text = "Boxes Highlighted"
+horizontal_alignment = 1
+
+[node name="BoxesSlider" type="HSlider" parent="MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+ticks_on_borders = true
+
+[node name="SliderLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/BoxesSlider"]
+layout_mode = 2
+offset_left = 146.0
+offset_top = 20.0
+offset_right = 174.0
+offset_bottom = 43.0
+size_flags_horizontal = 4
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_d0ghn")
+placement = 1
+separation = 0
+metadata/_edit_initialized_ = true
+
+[node name="GridSize" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Grid Size"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Columns" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Columns"
+horizontal_alignment = 1
+
+[node name="ColumnSlider" type="HSlider" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 25.0
+
+[node name="SliderLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ColumnSlider"]
+layout_mode = 2
+offset_left = 146.0
+offset_top = 20.0
+offset_right = 174.0
+offset_bottom = 43.0
+size_flags_horizontal = 4
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_d0ghn")
+placement = 1
+separation = 0
+metadata/_edit_initialized_ = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="Rows" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Rows     "
+horizontal_alignment = 1
+
+[node name="RowSlider" type="HSlider" parent="MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 50.0
+
+[node name="SliderLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RowSlider"]
+offset_left = 146.0
+offset_top = 20.0
+offset_right = 174.0
+offset_bottom = 43.0
+size_flags_horizontal = 4
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_d0ghn")
+placement = 1
+separation = 0
+metadata/_edit_initialized_ = true
+
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/MarginContainer4/VBoxContainer/TimeSlider" to="." method="_on_time_slider_value_changed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/BoxesSlider" to="." method="_on_boxes_slider_value_changed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ColumnSlider" to="." method="_on_column_slider_value_changed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RowSlider" to="." method="_on_row_slider_value_changed"]
