@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dko01urihrmd0"]
+[gd_scene load_steps=8 format=3 uid="uid://dko01urihrmd0"]
 
 [ext_resource type="Texture2D" uid="uid://blpsmfngmy7g0" path="res://textures/block.tres" id="1_6hca5"]
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_8447g"]
+[ext_resource type="Theme" uid="uid://d16l6kwqf0nby" path="res://fontTheme/new_theme.tres" id="3_xy72n"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_enbc7"]
 particles_animation = true
@@ -49,7 +50,8 @@ script = ExtResource("1_8447g")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Node2D"]
 material = SubResource("CanvasItemMaterial_enbc7")
-position = Vector2(184, -75)
+position = Vector2(357, -57)
+scale = Vector2(2.92169, 0.0508408)
 amount = 60
 process_material = SubResource("ParticleProcessMaterial_esn15")
 texture = ExtResource("1_6hca5")
@@ -57,23 +59,22 @@ lifetime = 7.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = 14
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -68.0
-offset_top = -46.5
-offset_right = 68.0
-offset_bottom = 46.5
+offset_top = -33.0
+offset_bottom = 33.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 4
 
 [node name="Start" type="Button" parent="VBoxContainer/MarginContainer2"]
 layout_mode = 2
+theme = ExtResource("3_xy72n")
 text = "Start"
 
 [node name="MarginContainer3" type="MarginContainer" parent="VBoxContainer"]
@@ -81,6 +82,7 @@ layout_mode = 2
 
 [node name="Settings" type="Button" parent="VBoxContainer/MarginContainer3"]
 layout_mode = 2
+theme = ExtResource("3_xy72n")
 text = "Settings"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -95,6 +97,7 @@ grow_horizontal = 2
 
 [node name="Label" type="Label" parent="MarginContainer"]
 layout_mode = 2
+theme = ExtResource("3_xy72n")
 text = "Grid Puzzle Game"
 horizontal_alignment = 1
 

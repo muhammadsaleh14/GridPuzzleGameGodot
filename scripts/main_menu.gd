@@ -3,7 +3,8 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	if not DirAccess.dir_exists_absolute("user://user_prefs.tres"):
+		DirAccess.make_dir_absolute("user://user_prefs.tres")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

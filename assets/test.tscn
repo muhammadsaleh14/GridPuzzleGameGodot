@@ -8,10 +8,11 @@ position = Vector2(165, 96)
 script = ExtResource("1_jafd7")
 
 [node name="Block" parent="." instance=ExtResource("2_4ki7e")]
-position = Vector2(-60, 0)
+position = Vector2(-75, -32)
 
 [node name="Block2" parent="." instance=ExtResource("2_4ki7e")]
+position = Vector2(-75, 14)
 
 [node name="Block3" parent="." instance=ExtResource("2_4ki7e")]
-position = Vector2(66, 0)
+position = Vector2(-75, 60)
 scale = Vector2(0.519025, 0.319025)

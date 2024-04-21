@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://b7bkq10h20ttv"]
+[gd_scene load_steps=9 format=3 uid="uid://b7bkq10h20ttv"]
 
 [ext_resource type="Script" path="res://scripts/settings.gd" id="1_r7hsq"]
 [ext_resource type="Texture2D" uid="uid://blpsmfngmy7g0" path="res://textures/block.tres" id="2_2tbdu"]
 [ext_resource type="Script" path="res://addons/SliderLabel/SliderLabel.gd" id="2_d0ghn"]
+[ext_resource type="Theme" uid="uid://d16l6kwqf0nby" path="res://fontTheme/new_theme.tres" id="3_ob386"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_geg0i"]
 particles_animation = true
@@ -50,7 +51,8 @@ script = ExtResource("1_r7hsq")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Node2D"]
 material = SubResource("CanvasItemMaterial_geg0i")
-position = Vector2(184, -75)
+position = Vector2(363, -41)
+scale = Vector2(-2.2141, -0.159171)
 amount = 60
 process_material = SubResource("ParticleProcessMaterial_m36al")
 texture = ExtResource("2_2tbdu")
@@ -91,6 +93,7 @@ layout_mode = 2
 
 [node name="Time" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer4/VBoxContainer"]
 layout_mode = 2
+theme = ExtResource("3_ob386")
 text = "Time"
 horizontal_alignment = 1
 
@@ -206,6 +209,7 @@ layout_mode = 2
 max_value = 50.0
 
 [node name="SliderLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RowSlider"]
+layout_mode = 0
 offset_left = 146.0
 offset_top = 20.0
 offset_right = 174.0
@@ -219,7 +223,12 @@ placement = 1
 separation = 0
 metadata/_edit_initialized_ = true
 
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "< Go Back "
+
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/MarginContainer4/VBoxContainer/TimeSlider" to="." method="_on_time_slider_value_changed"]
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/BoxesSlider" to="." method="_on_boxes_slider_value_changed"]
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ColumnSlider" to="." method="_on_column_slider_value_changed"]
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RowSlider" to="." method="_on_row_slider_value_changed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

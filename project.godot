@@ -11,20 +11,24 @@ config_version=5
 [application]
 
 config/name="GridPuzzle"
-run/main_scene="res://main.tscn"
+run/main_scene="res://assets/main_menu.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=360
-window/size/viewport_height=640
-window/stretch/mode="viewport"
-window/stretch/aspect="expand"
+window/size/viewport_width=720
+window/size/viewport_height=1280
+window/size/mode=2
+window/handheld/orientation=1
 
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/SliderLabel/plugin.cfg")
+
+[gui]
+
+theme/custom="res://fontTheme/new_theme.tres"
 
 [input]
 
@@ -42,3 +46,4 @@ pointing/emulate_touch_from_mouse=true
 [rendering]
 
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true

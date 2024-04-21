@@ -15,30 +15,30 @@ one_shot = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="SubmitMarginContainer" type="MarginContainer" parent="CanvasLayer"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -31.5
-offset_right = 31.5
-offset_bottom = 31.0
-grow_horizontal = 2
-
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -0.5
-offset_right = 0.5
-offset_bottom = 24.0
+offset_left = -109.0
+offset_right = 109.0
+offset_bottom = 41.0
 grow_horizontal = 2
 theme_override_constants/margin_top = 1
 
 [node name="Label" type="Label" parent="CanvasLayer/MarginContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 8
+size_flags_vertical = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="SubmitNode2D" type="Node2D" parent="."]
+visible = false
 
 [node name="SubmitButton" type="TouchScreenButton" parent="SubmitNode2D"]
 shape = SubResource("RectangleShape2D_ohkry")
@@ -49,9 +49,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -35.0
+offset_left = -60.0
 offset_top = -15.0
-offset_right = 35.0
+offset_right = 60.0
 offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -84,10 +84,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = -20.0
-offset_right = 40.0
-offset_bottom = 20.0
+offset_left = -80.0
+offset_top = -25.0
+offset_right = 80.0
+offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0.129412, 0.129412, 1)
@@ -100,7 +100,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.545098, 0.752941, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-text = "Retry"
+text = "Play again"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="pressed" from="SubmitNode2D/SubmitButton" to="." method="_on_submit_button_pressed"]

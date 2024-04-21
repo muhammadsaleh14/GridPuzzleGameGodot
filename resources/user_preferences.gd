@@ -1,9 +1,8 @@
 class_name UserPreferences extends Resource
-
-var rows: int = 5
-var columns: int = 5
-var time:int = 5
-var boxes:int = 5
+@export var rows: int = 5
+@export var columns: int = 5
+@export var time:int = 2
+@export var boxes:int = 5
 
 func save() -> void:
 	ResourceSaver.save(self, "user://user_prefs.tres")

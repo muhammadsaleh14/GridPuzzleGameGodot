@@ -14,7 +14,7 @@ var rng = RandomNumberGenerator.new()
 var cell_size:Vector2
 var highlighted_blocks_index = []
 var user_clicked_blocks_index = []
-var select_mode = false
+var select_mode = true
  
 
 func _ready():
@@ -23,6 +23,12 @@ func _ready():
 	grid_size.y = user_prefs.rows
 	level_time = user_prefs.time
 	num_blocks_to_highlight = user_prefs.boxes
+	#
+	#grid_size.x = 5
+	#grid_size.y = 5
+	#level_time = 5
+	#num_blocks_to_highlight = 6
+	#
 	
 	var node: Node2D = block.instantiate()
 	var texture_sprite: Sprite2D = node.get_node("TextureSprite")
@@ -53,8 +59,6 @@ func _ready():
 	#center blocks
 	var center_pos = get_viewport().get_size() / 2.0
 	
-	
-	
 	var adjustable_row_length = (cell_size.x * grid_size.x) /2
 	var adjustable_col_length = (cell_size.y * grid_size.y) /2
 
@@ -75,7 +79,7 @@ func _ready():
 			block_node.position = Vector2(col * cell_size.x, row * cell_size.y)
 			$Blocks.add_child(block_node)
 			
-	_on_timer_timeout()
+	_on_restart_button_pressed()
 	
 func _on_block_pressed (block_node:Node2D):
 	if select_mode == true:
@@ -106,6 +110,8 @@ func _on_submit_button_pressed():
 	var DarkRed = Color(0.83,0.17,0.0,1)
 	var Teal = Color(0.1, 0.566, 0.246,1)
 	$RestartNode2D.visible = true
+	$SubmitNode2D.visible = false
+	
 	if correct_solution:
 		$RestartNode2D/RestartButton/RestartLabel.text = "Play Again"
 		color_rect.color = Teal
@@ -118,10 +124,6 @@ func _on_restart_button_pressed():
 	$RestartNode2D.visible = false
 	reset_highlight_blocks()
 	_on_timer_timeout()
-
-
-
-	
 
 
 func _on_timer_timeout():

@@ -9,6 +9,14 @@ extends Control
 var user_prefs: UserPreferences
 
 func _ready():
+	var config = ConfigFile.new()
+	var err = config.load("user://scores.cfg")
+	if err != OK:
+		var rows = config.get_value("user","rows")
+
+# Load data from a file.
+	var err = config.load("user://scores.cfg")
+	
 	#rows
 	row_slider.min_value = 1
 	row_slider.max_value = 50
@@ -18,8 +26,12 @@ func _ready():
 	#time_slider
 	time_slider.min_value = 1
 	time_slider.max_value = 30
-
+	#boxes
+	box_slider.min_value = 1
+	box_slider.max_value = row_slider.value * column_slider.value
+	
 	user_prefs = UserPreferences.load_or_create()
+	print("userpref", user_prefs.columns)
 	if row_slider:
 		row_slider.value = user_prefs.rows
 	if column_slider:
@@ -30,11 +42,11 @@ func _ready():
 		box_slider.value = user_prefs.boxes
 		
 	#boxes slider
-	box_slider.min_value = 1
-	box_slider.max_value = row_slider.value * column_slider.value
+
 	
 func _on_row_slider_value_changed(value):
 	if user_prefs:
+		print("value",value)
 		user_prefs.rows = value
 		user_prefs.save()
 	adjust_box_slider_value()
@@ -63,3 +75,8 @@ func _on_boxes_slider_value_changed(value):
 	if user_prefs:
 		user_prefs.boxes = value
 		user_prefs.save()
+
+
+func _on_back_button_pressed():
+	print("bakc button pressde")
+	get_tree().change_scene_to_file("res://assets/main_menu.tscn")
