@@ -13,6 +13,7 @@ func _process(delta):
 
 
 func _on_settings_pressed():
+	AudioManager.button_pressed.play()
 	get_tree().change_scene_to_file("res://assets/settings.tscn")
 
 

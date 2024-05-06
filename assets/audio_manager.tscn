@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://e88jfj0fnqf1"]
+
+[ext_resource type="Script" path="res://scripts/AudioManager.gd" id="1_lbbsf"]
+[ext_resource type="AudioStream" uid="uid://cbmdohcc54hrt" path="res://audio/bhum.mp3" id="2_d34ew"]
+[ext_resource type="AudioStream" uid="uid://dh86hp87e347t" path="res://audio/Button_press.mp3" id="3_n32yn"]
+[ext_resource type="AudioStream" uid="uid://da035k1ol50gy" path="res://audio/sucess.mp3" id="4_aj4hw"]
+[ext_resource type="AudioStream" uid="uid://cp3p63phjxx3a" path="res://audio/failed.mp3" id="5_ywlny"]
+[ext_resource type="AudioStream" uid="uid://n076u0vlv21m" path="res://audio/ting.mp3" id="6_cfwat"]
+[ext_resource type="AudioStream" uid="uid://b1mj18akj68tq" path="res://audio/clock_tick.mp3" id="7_vogcu"]
+
+[node name="AudioManager" type="Node2D"]
+script = ExtResource("1_lbbsf")
+
+[node name="ButtonPressed" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_d34ew")
+volume_db = 17.0
+
+[node name="ToggleBlock" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_n32yn")
+volume_db = 12.0
+pitch_scale = 1.5
+
+[node name="LevelPassed" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_aj4hw")
+volume_db = 2.0
+pitch_scale = 0.5
+
+[node name="LevelFailed" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_ywlny")
+pitch_scale = 0.8
+
+[node name="SliderMoved" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_cfwat")
+volume_db = 7.0
+pitch_scale = 3.0
+max_polyphony = 10
+
+[node name="ClockTick" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_vogcu")
+volume_db = 4.0
+pitch_scale = 1.1

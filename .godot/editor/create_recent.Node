@@ -1,9 +1,10 @@
-Button
-MarginContainer
-Label
-SliderLabel
 VBoxContainer
+MarginContainer
 HBoxContainer
+AudioStreamPlayer2D
+Label
+Button
+SliderLabel
 HSlider
 VisibleOnScreenEnabler2D
 Control
@@ -11,4 +12,3 @@ Node2D
 GPUParticles2D
 BackBufferCopy
 Sprite2D
-ColorRect

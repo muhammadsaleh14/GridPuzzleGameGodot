@@ -2,6 +2,8 @@ extends Node2D
 
 var user_prefs: UserPreferences
 
+
+
 @export var grid_size = Vector2(5, 5)
 @export var num_blocks_to_highlight = 5  # Number of rows and columns
 @export var level_time = 2
@@ -9,20 +11,41 @@ var user_prefs: UserPreferences
 var InvertShader = preload("res://shaders/block.gdshader")
 var block := preload("res://assets/block.tscn")  # Preload the node instance
 @onready var timer =  $Timer 
-@onready var label = $CanvasLayer/MarginContainer/Label
+@onready var label = %Label
+@onready var timer_value_label = %TimerValueLabel
+
+
 var rng = RandomNumberGenerator.new()
 var cell_size:Vector2
 var highlighted_blocks_index = []
 var user_clicked_blocks_index = []
 var select_mode = true
  
+var settings = Configuration.new()
+var time_left:int = 0
+
+func _process(delta):
+	var timer_time_left = ceil(timer.time_left)
+	print("timer  time left", timer_time_left, "vs time left: ",time_left)
+	if timer_time_left>0 and timer_time_left != time_left:
+		time_left = timer_time_left
+		AudioManager.clock_tick.play()
+		timer_value_label.text = str(timer_time_left)
+	elif timer_time_left == 0:
+		timer_value_label.text = ""	
 
 func _ready():
 	user_prefs = UserPreferences.load_or_create()
-	grid_size.x = user_prefs.columns
-	grid_size.y = user_prefs.rows
-	level_time = user_prefs.time
-	num_blocks_to_highlight = user_prefs.boxes
+	
+	grid_size.y = settings.get_rows()
+	grid_size.x = settings.get_columns()
+	level_time = settings.get_time()
+	num_blocks_to_highlight = settings.get_boxes()
+	
+	#grid_size.x = user_prefs.columns
+	#grid_size.y = user_prefs.rows
+	#level_time = user_prefs.time
+	#num_blocks_to_highlight = user_prefs.boxes
 	#
 	#grid_size.x = 5
 	#grid_size.y = 5
@@ -34,7 +57,7 @@ func _ready():
 	var texture_sprite: Sprite2D = node.get_node("TextureSprite")
 	#expand to cover 3/4 of screen
 	var height = get_viewport().get_size().y * 3/4
-	var width =  get_viewport().get_size().x * 4/5
+	var width =  get_viewport().get_size().x * 6/7
 	
 	
 	#For x scale
@@ -88,6 +111,7 @@ func _on_block_pressed (block_node:Node2D):
 		pass
 
 func _on_submit_button_pressed():
+	
 	var correct_solution = true
 	for i in grid_size.x * grid_size.y:
 		var block = $Blocks.get_child(i)
@@ -113,14 +137,17 @@ func _on_submit_button_pressed():
 	$SubmitNode2D.visible = false
 	
 	if correct_solution:
+		AudioManager.level_passed.play()
 		$RestartNode2D/RestartButton/RestartLabel.text = "Play Again"
 		color_rect.color = Teal
 	else:
+		AudioManager.level_failed.play()
 		$RestartNode2D/RestartButton/RestartLabel.text = "Retry"
 		color_rect.color = DarkRed
 		
 		
 func _on_restart_button_pressed():
+	AudioManager.button_pressed.play()
 	$RestartNode2D.visible = false
 	reset_highlight_blocks()
 	_on_timer_timeout()
@@ -180,3 +207,8 @@ func reset_highlight_blocks():
 
 
 
+
+
+func _on_back_button_pressed():
+	AudioManager.button_pressed.play()
+	get_tree().change_scene_to_file("res://assets/settings.tscn")

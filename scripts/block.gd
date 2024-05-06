@@ -29,6 +29,7 @@ func disable():
 	texture_sprite.material.shader = InvertShader
 
 func toggle():
+	AudioManager.toggle_block.play()
 	if texture_sprite.material.shader == InvertShader:
 		texture_sprite.material.shader = null  #enabled
 	else:

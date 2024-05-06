@@ -8,8 +8,6 @@ res://assets/block.tscn
 res://assets/test.tscn
 res://assets/main_menu.tscn
 res://assets/settings.tscn
+res://assets/audio_manager.tscn
 res://scripts/main.gd
-res://resources/user_preferences.gd
-res://scripts/main_menu.gd
-res://scripts/settings.gd
-res://resources/config.gd
+res://scripts/AudioManager.gd

@@ -50,7 +50,7 @@ script = ExtResource("1_8447g")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Node2D"]
 material = SubResource("CanvasItemMaterial_enbc7")
-position = Vector2(357, -57)
+position = Vector2(399, 0)
 scale = Vector2(2.92169, 0.0508408)
 amount = 60
 process_material = SubResource("ParticleProcessMaterial_esn15")
@@ -94,6 +94,7 @@ offset_left = -68.0
 offset_right = 68.0
 offset_bottom = 23.0
 grow_horizontal = 2
+theme_override_constants/margin_top = 40
 
 [node name="Label" type="Label" parent="MarginContainer"]
 layout_mode = 2
