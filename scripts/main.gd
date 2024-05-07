@@ -25,6 +25,7 @@ var settings = Configuration.new()
 var time_left:int = 0
 
 func _process(delta):
+	#timer
 	var timer_time_left = ceil(timer.time_left)
 	print("timer  time left", timer_time_left, "vs time left: ",time_left)
 	if timer_time_left>0 and timer_time_left != time_left:
@@ -207,7 +208,10 @@ func reset_highlight_blocks():
 
 
 
-
+func _notification(what):
+	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		get_tree().change_scene_to_file("res://assets/main_menu.tscn")
+	
 
 func _on_back_button_pressed():
 	AudioManager.button_pressed.play()

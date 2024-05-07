@@ -11,3 +11,5 @@ res://assets/settings.tscn
 res://assets/audio_manager.tscn
 res://scripts/main.gd
 res://scripts/AudioManager.gd
+res://scripts/main_menu.gd
+res://scripts/settings.gd
