@@ -1,5 +1,6 @@
-VBoxContainer
+ColorRect
 MarginContainer
+VBoxContainer
 HBoxContainer
 AudioStreamPlayer2D
 Label
