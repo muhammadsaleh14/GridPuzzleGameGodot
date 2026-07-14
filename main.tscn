@@ -1,273 +1,198 @@
-[gd_scene load_steps=8 format=3 uid="uid://8k8cabun1w3y"]
+[gd_scene load_steps=6 format=3 uid="uid://8k8cabun1w3y"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_ynhme"]
 [ext_resource type="Texture2D" uid="uid://bjptq6wfur60r" path="res://textures/gradient_orange_to_green.tres" id="2_gll8a"]
-[ext_resource type="Texture2D" uid="uid://bdqgfih0lixuu" path="res://textures/cog.jpg" id="3_pbjgy"]
 [ext_resource type="Theme" uid="uid://d16l6kwqf0nby" path="res://fontTheme/new_theme.tres" id="4_theme"]
 [ext_resource type="StyleBox" path="res://styles/hud_badge.tres" id="5_badge"]
+[ext_resource type="StyleBox" path="res://styles/panel_card.tres" id="6_panel"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rp7gf"]
-content_margin_top = 24.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ohkry"]
-size = Vector2(180, 70)
-
-[node name="level" type="Node2D"]
+[node name="Level" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_theme")
 script = ExtResource("1_ynhme")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = -1
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_gll8a")
-
-[node name="DimOverlay" type="ColorRect" parent="CanvasLayer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0.04, 0.02, 0.08, 0.22)
-
-[node name="TopBar" type="MarginContainer" parent="CanvasLayer"]
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 220.0
-grow_horizontal = 2
-theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 36
-theme_override_constants/margin_right = 24
-
-[node name="vbox" type="VBoxContainer" parent="CanvasLayer/TopBar"]
-layout_mode = 2
-theme = ExtResource("4_theme")
-theme_override_constants/separation = 8
-
-[node name="Label" type="Label" parent="CanvasLayer/TopBar/vbox"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 28
-theme_override_styles/normal = ExtResource("5_badge")
-text = "Get ready"
-horizontal_alignment = 1
-
-[node name="TimerValueLabel" type="Label" parent="CanvasLayer/TopBar/vbox"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_colors/font_color = Color(1, 0.92, 0.55, 1)
-theme_override_font_sizes/font_size = 64
-horizontal_alignment = 1
-
-[node name="PhaseHint" type="Label" parent="CanvasLayer/TopBar/vbox"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_colors/font_color = Color(1, 1, 1, 0.65)
-theme_override_font_sizes/font_size = 18
-horizontal_alignment = 1
-
-[node name="TapContainer" type="VBoxContainer" parent="CanvasLayer/TopBar/vbox"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="TapTap" type="Label" parent="CanvasLayer/TopBar/vbox/TapContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_colors/font_color = Color(0.75, 0.62, 1, 1)
-theme_override_font_sizes/font_size = 20
-text = "Auto-tap speed"
-horizontal_alignment = 1
-
-[node name="TapTapSlider" type="HSlider" parent="CanvasLayer/TopBar/vbox/TapContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_styles/slider = SubResource("StyleBoxEmpty_rp7gf")
-max_value = 50.0
-
-[node name="TapTapTimer" type="Timer" parent="CanvasLayer/TopBar/vbox/TapContainer"]
-unique_name_in_owner = true
-
-[node name="SettingsButton" type="Button" parent="CanvasLayer"]
-unique_name_in_owner = true
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -88.0
-offset_top = 28.0
-offset_right = -24.0
-offset_bottom = 92.0
-grow_horizontal = 0
-theme = ExtResource("4_theme")
-theme_override_font_sizes/font_size = 22
-text = "Set"
-
-[node name="SettingsIcon" type="TextureRect" parent="CanvasLayer/SettingsButton"]
-visible = false
-modulate = Color(0.55, 0.85, 0.35, 1)
+[node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_pbjgy")
+mouse_filter = 2
+texture = ExtResource("2_gll8a")
 expand_mode = 1
-stretch_mode = 5
 
-[node name="ResultBanner" type="Label" parent="CanvasLayer"]
-unique_name_in_owner = true
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -180.0
-offset_top = -220.0
-offset_right = 180.0
-offset_bottom = -150.0
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("4_theme")
+mouse_filter = 2
+color = Color(0.04, 0.02, 0.08, 0.25)
+
+[node name="SafeArea" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 24
+
+[node name="RootVBox" type="VBoxContainer" parent="SafeArea"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TopBar" type="HBoxContainer" parent="SafeArea/RootVBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PhaseColumn" type="VBoxContainer" parent="SafeArea/RootVBox/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="SafeArea/RootVBox/TopBar/PhaseColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = ExtResource("5_badge")
+text = "Get ready"
+horizontal_alignment = 1
+
+[node name="PhaseHint" type="Label" parent="SafeArea/RootVBox/TopBar/PhaseColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.65)
+theme_override_font_sizes/font_size = 16
+text = ""
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="SettingsButton" type="Button" parent="SafeArea/RootVBox/TopBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(72, 56)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 20
+text = "Set"
+
+[node name="TimerValueLabel" type="Label" parent="SafeArea/RootVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.92, 0.55, 1)
 theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+
+[node name="TapContainer" type="VBoxContainer" parent="SafeArea/RootVBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="TapTap" type="Label" parent="SafeArea/RootVBox/TapContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.62, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Auto-tap speed"
+horizontal_alignment = 1
+
+[node name="TapTapSlider" type="HSlider" parent="SafeArea/RootVBox/TapContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 100.0
+
+[node name="TapTapTimer" type="Timer" parent="SafeArea/RootVBox/TapContainer"]
+unique_name_in_owner = true
+
+[node name="BoardArea" type="PanelContainer" parent="SafeArea/RootVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("6_panel")
+
+[node name="BoardMargin" type="MarginContainer" parent="SafeArea/RootVBox/BoardArea"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="BoardHost" type="Control" parent="SafeArea/RootVBox/BoardArea/BoardMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="BoardCenter" type="CenterContainer" parent="SafeArea/RootVBox/BoardArea/BoardMargin/BoardHost"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Grid" type="GridContainer" parent="SafeArea/RootVBox/BoardArea/BoardMargin/BoardHost/BoardCenter"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
+columns = 5
+
+[node name="ResultBanner" type="Label" parent="SafeArea/RootVBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = ExtResource("5_badge")
 text = "Nice!"
 horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="Blocks" type="Node2D" parent="."]
+[node name="ActionBar" type="HBoxContainer" parent="SafeArea/RootVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="SubmitButton" type="Button" parent="SafeArea/RootVBox/ActionBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Submit"
+
+[node name="ReplayButton" type="Button" parent="SafeArea/RootVBox/ActionBar"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(150, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Replay"
+
+[node name="RestartButton" type="Button" parent="SafeArea/RootVBox/ActionBar"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(150, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Play Again"
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
-[node name="SubmitNode2D" type="Node2D" parent="."]
-
-[node name="SubmitButton" type="TouchScreenButton" parent="SubmitNode2D"]
-shape = SubResource("RectangleShape2D_ohkry")
-
-[node name="ColorRect" type="ColorRect" parent="SubmitNode2D/SubmitButton"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -32.0
-offset_right = 100.0
-offset_bottom = 32.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.18, 0.08, 0.32, 0.92)
-
-[node name="Label" type="Label" parent="SubmitNode2D/SubmitButton"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -70.0
-offset_top = -18.0
-offset_right = 70.0
-offset_bottom = 18.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.95, 0.92, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.6)
-theme_override_font_sizes/font_size = 28
-text = "Submit"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="RestartNode2D" type="Node2D" parent="."]
-
-[node name="HBoxContainer" type="HBoxContainer" parent="RestartNode2D"]
-offset_right = 40.0
-offset_bottom = 40.0
-theme_override_constants/separation = 24
-
-[node name="RestartButton" type="TouchScreenButton" parent="RestartNode2D/HBoxContainer"]
-position = Vector2(200, 0)
-shape = SubResource("RectangleShape2D_ohkry")
-
-[node name="ColorRect" type="ColorRect" parent="RestartNode2D/HBoxContainer/RestartButton"]
-unique_name_in_owner = true
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -36.0
-offset_right = 100.0
-offset_bottom = 36.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.1, 0.45, 0.28, 0.95)
-
-[node name="RestartLabel" type="Label" parent="RestartNode2D/HBoxContainer/RestartButton"]
-unique_name_in_owner = true
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -100.0
-offset_top = -36.0
-offset_right = 100.0
-offset_bottom = 36.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.95, 0.98, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.55)
-theme_override_font_sizes/font_size = 26
-text = "Play again"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ReplayButton" type="TouchScreenButton" parent="RestartNode2D/HBoxContainer"]
-shape = SubResource("RectangleShape2D_ohkry")
-
-[node name="ColorRect" type="ColorRect" parent="RestartNode2D/HBoxContainer/ReplayButton"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -36.0
-offset_right = 100.0
-offset_bottom = 36.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.22, 0.1, 0.38, 0.95)
-
-[node name="ReplayLabel" type="Label" parent="RestartNode2D/HBoxContainer/ReplayButton"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -100.0
-offset_top = -36.0
-offset_right = 100.0
-offset_bottom = 36.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.95, 0.92, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.55)
-theme_override_font_sizes/font_size = 26
-text = "Replay"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[connection signal="value_changed" from="CanvasLayer/TopBar/vbox/TapContainer/TapTapSlider" to="." method="_on_tap_tap_slider_value_changed"]
-[connection signal="timeout" from="CanvasLayer/TopBar/vbox/TapContainer/TapTapTimer" to="." method="_on_tap_tap_timer_timeout"]
-[connection signal="pressed" from="CanvasLayer/SettingsButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="SafeArea/RootVBox/TopBar/SettingsButton" to="." method="_on_back_button_pressed"]
+[connection signal="value_changed" from="SafeArea/RootVBox/TapContainer/TapTapSlider" to="." method="_on_tap_tap_slider_value_changed"]
+[connection signal="timeout" from="SafeArea/RootVBox/TapContainer/TapTapTimer" to="." method="_on_tap_tap_timer_timeout"]
+[connection signal="pressed" from="SafeArea/RootVBox/ActionBar/SubmitButton" to="." method="_on_submit_button_pressed"]
+[connection signal="pressed" from="SafeArea/RootVBox/ActionBar/ReplayButton" to="." method="_on_replay_button_pressed"]
+[connection signal="pressed" from="SafeArea/RootVBox/ActionBar/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="pressed" from="SubmitNode2D/SubmitButton" to="." method="_on_submit_button_pressed"]
-[connection signal="pressed" from="RestartNode2D/HBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
-[connection signal="pressed" from="RestartNode2D/HBoxContainer/ReplayButton" to="." method="_on_replay_button_pressed"]
