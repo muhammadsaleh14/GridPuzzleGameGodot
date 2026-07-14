@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://dn2nfoj28w3ii"]
+
+[ext_resource type="Script" path="res://scripts/level_select.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bjptq6wfur60r" path="res://textures/gradient_orange_to_green.tres" id="2_grad"]
+[ext_resource type="Theme" uid="uid://d16l6kwqf0nby" path="res://fontTheme/new_theme.tres" id="3_theme"]
+[ext_resource type="StyleBox" path="res://styles/panel_card.tres" id="4_panel"]
+[ext_resource type="StyleBox" path="res://styles/hud_badge.tres" id="5_badge"]
+
+[node name="LevelSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_theme")
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_grad")
+expand_mode = 1
+
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.04, 0.02, 0.08, 0.35)
+
+[node name="SafeArea" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 36
+
+[node name="VBox" type="VBoxContainer" parent="SafeArea"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="SafeArea/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 42
+theme_override_styles/normal = ExtResource("5_badge")
+text = "LEVELS"
+horizontal_alignment = 1
+
+[node name="Summary" type="Label" parent="SafeArea/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 1, 0.85)
+theme_override_font_sizes/font_size = 20
+text = "0 / 24 cleared"
+horizontal_alignment = 1
+
+[node name="Scroll" type="ScrollContainer" parent="SafeArea/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Card" type="PanelContainer" parent="SafeArea/VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = ExtResource("4_panel")
+
+[node name="LevelGrid" type="GridContainer" parent="SafeArea/VBox/Scroll/Card"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 4
+
+[node name="BackButton" type="Button" parent="SafeArea/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+text = "Back to Menu"
+
+[connection signal="pressed" from="SafeArea/VBox/BackButton" to="." method="_on_back_pressed"]

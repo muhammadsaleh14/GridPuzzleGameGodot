@@ -13,15 +13,19 @@ var block_scene := preload("res://assets/block.tscn")
 @onready var label: Label = %Label
 @onready var timer_value_label: Label = %TimerValueLabel
 @onready var phase_hint: Label = %PhaseHint
+@onready var level_title: Label = %LevelTitle
 @onready var tap_container: Control = %TapContainer
 @onready var tap_tap_slider: HSlider = %TapTapSlider
 @onready var tap_tap_timer: Timer = %TapTapTimer
 @onready var restart_button: Button = %RestartButton
 @onready var replay_button: Button = %ReplayButton
 @onready var submit_button: Button = %SubmitButton
+@onready var next_button: Button = %NextButton
+@onready var levels_button: Button = %LevelsButton
 @onready var result_banner: Label = %ResultBanner
 @onready var board_host: Control = %BoardHost
 @onready var grid: GridContainer = %Grid
+@onready var nav_button: Button = %SettingsButton
 
 var rng := RandomNumberGenerator.new()
 var highlighted_blocks_index: Array = []
@@ -35,6 +39,7 @@ var is_replay := false
 var _timer_pulse: Tween
 var _layout_pending := false
 var _blocks: Array[Control] = []
+var _last_round_won := false
 
 var _ad_view: AdView
 
@@ -64,23 +69,60 @@ func _ready() -> void:
 	_on_load_banner_pressed()
 
 	user_prefs = UserPreferences.load_or_create()
-	grid_size.y = settings.get_rows()
-	grid_size.x = settings.get_columns()
-	level_time = settings.get_time()
-	num_blocks_to_highlight = settings.get_boxes()
-	space = settings.get_space()
+	_apply_session_config()
 
 	tap_tap_slider.max_value = max_taptap_speed
 	tap_container.visible = grid_size == Vector2(1, 1)
 	result_banner.visible = false
 	_show_actions_idle()
+	_update_nav_button()
 
 	board_host.resized.connect(_on_board_resized)
 	_build_grid()
-	# Wait one frame so BoardHost has a real size, then fit cells.
 	await get_tree().process_frame
 	_fit_grid_to_board()
-	_on_restart_button_pressed()
+	_begin_round()
+
+
+func _apply_session_config() -> void:
+	# Ensure we always have a valid session when entering the game scene.
+	if GameSession.mode == GameSession.Mode.CAMPAIGN and GameSession.active_level == null:
+		GameSession.reload_progress()
+		var start_index := clampi(GameSession.progress.highest_unlocked, 0, LevelCatalog.count() - 1)
+		GameSession.start_campaign_level(start_index)
+
+	if GameSession.is_campaign() and GameSession.active_level != null:
+		var level: LevelDefinition = GameSession.active_level
+		grid_size = Vector2(level.columns, level.rows)
+		level_time = level.memorize_time
+		space = level.tile_gap
+		num_blocks_to_highlight = level.pattern.size()
+		level_title.visible = true
+		level_title.text = "Level %d — %s" % [GameSession.active_level_index + 1, level.title]
+		return
+
+	# Free play
+	if not GameSession.start_free_play():
+		GameSession.reload_progress()
+		GameSession.start_campaign_level(0)
+		if GameSession.active_level:
+			_apply_session_config()
+			return
+
+	grid_size.y = settings.get_rows()
+	grid_size.x = settings.get_columns()
+	level_time = settings.get_time()
+	num_blocks_to_highlight = settings.get_boxes()
+	space = settings.get_space()
+	level_title.visible = true
+	level_title.text = "Free Play"
+
+
+func _update_nav_button() -> void:
+	if GameSession.is_campaign():
+		nav_button.text = "Levels"
+	else:
+		nav_button.text = "Set"
 
 
 func _build_grid() -> void:
@@ -122,7 +164,6 @@ func _fit_grid_to_board() -> void:
 	var cell_w := (area.x - gap * float(cols - 1)) / float(cols)
 	var cell_h := (area.y - gap * float(rows - 1)) / float(rows)
 	var cell := minf(cell_w, cell_h)
-	# Keep tiles readable but never larger than the board allows.
 	cell = clampf(cell, 12.0, 120.0)
 
 	grid.add_theme_constant_override("h_separation", int(gap))
@@ -159,18 +200,24 @@ func _show_actions_idle() -> void:
 	submit_button.visible = false
 	replay_button.visible = false
 	restart_button.visible = false
+	next_button.visible = false
+	levels_button.visible = false
 
 
 func _show_actions_solve() -> void:
 	submit_button.visible = true
 	replay_button.visible = false
 	restart_button.visible = false
+	next_button.visible = false
+	levels_button.visible = false
 
 
-func _show_actions_result() -> void:
+func _show_actions_result(won: bool) -> void:
 	submit_button.visible = false
 	replay_button.visible = true
 	restart_button.visible = true
+	levels_button.visible = GameSession.is_campaign()
+	next_button.visible = won and GameSession.is_campaign() and GameSession.has_next_level()
 
 
 func _on_tap_tap_slider_value_changed(value: float) -> void:
@@ -205,17 +252,33 @@ func _on_submit_button_pressed() -> void:
 			correct_solution = false
 			block_node.missed_selection_mask()
 
-	_show_actions_result()
+	_last_round_won = correct_solution
 	result_banner.visible = true
 	result_banner.modulate.a = 0.0
 
 	if correct_solution:
 		AudioManager.level_passed.play()
-		restart_button.text = "Play Again"
-		label.text = "Perfect pattern"
-		phase_hint.text = "You matched every tile"
-		result_banner.text = "Nice!"
-		result_banner.add_theme_color_override("font_color", Color(0.55, 1.0, 0.7, 1))
+		if GameSession.is_campaign():
+			GameSession.progress.mark_cleared(GameSession.active_level_index)
+			GameSession.reload_progress()
+			restart_button.text = "Retry"
+			if GameSession.progress.is_campaign_complete() and not GameSession.has_next_level():
+				result_banner.text = "Campaign complete!"
+				phase_hint.text = "Free Play is now unlocked from the menu"
+			elif GameSession.has_next_level():
+				result_banner.text = "Cleared!"
+				phase_hint.text = "Next level unlocked"
+			else:
+				result_banner.text = "Cleared!"
+				phase_hint.text = "Great job"
+			label.text = "Perfect pattern"
+			result_banner.add_theme_color_override("font_color", Color(0.55, 1.0, 0.7, 1))
+		else:
+			restart_button.text = "Play Again"
+			label.text = "Perfect pattern"
+			phase_hint.text = "You matched every tile"
+			result_banner.text = "Nice!"
+			result_banner.add_theme_color_override("font_color", Color(0.55, 1.0, 0.7, 1))
 	else:
 		AudioManager.level_failed.play()
 		restart_button.text = "Retry"
@@ -224,22 +287,43 @@ func _on_submit_button_pressed() -> void:
 		result_banner.text = "Try again"
 		result_banner.add_theme_color_override("font_color", Color(1.0, 0.7, 0.55, 1))
 
+	_show_actions_result(correct_solution)
 	var tween := create_tween()
 	tween.tween_property(result_banner, "modulate:a", 1.0, 0.25)
+
+
+func _begin_round() -> void:
+	result_banner.visible = false
+	_show_actions_idle()
+	reset_highlight_blocks()
+	select_mode = true
+	_on_timer_timeout()
 
 
 func _on_restart_button_pressed() -> void:
 	if restart_button.visible:
 		AudioManager.button_pressed.play()
-	result_banner.visible = false
-	_show_actions_idle()
-	reset_highlight_blocks()
-	_on_timer_timeout()
+	_begin_round()
 
 
 func _on_replay_button_pressed() -> void:
+	AudioManager.button_pressed.play()
 	is_replay = true
-	_on_restart_button_pressed()
+	_begin_round()
+
+
+func _on_next_button_pressed() -> void:
+	AudioManager.button_pressed.play()
+	if not GameSession.start_next_level():
+		return
+	destroy_ad_view()
+	SceneSwitcher.change_scene("res://main.tscn")
+
+
+func _on_levels_button_pressed() -> void:
+	AudioManager.button_pressed.play()
+	destroy_ad_view()
+	SceneSwitcher.change_scene("res://assets/level_select.tscn")
 
 
 func _on_timer_timeout() -> void:
@@ -281,7 +365,17 @@ func highlight_blocks() -> void:
 		replay_highlight_blocks()
 		is_replay = false
 		return
+
 	highlighted_blocks_index.clear()
+
+	if GameSession.is_campaign() and GameSession.active_level != null:
+		for index in GameSession.active_level.pattern:
+			var i := int(index)
+			if i >= 0 and i < _blocks.size():
+				_blocks[i].enable()
+				highlighted_blocks_index.append(i)
+		return
+
 	var total := _blocks.size()
 	if total == 0:
 		return
@@ -308,13 +402,19 @@ func reset_highlight_blocks() -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
 		destroy_ad_view()
-		SceneSwitcher.change_scene("res://assets/main_menu.tscn")
+		if GameSession.is_campaign():
+			SceneSwitcher.change_scene("res://assets/level_select.tscn")
+		else:
+			SceneSwitcher.change_scene("res://assets/main_menu.tscn")
 
 
 func _on_back_button_pressed() -> void:
 	AudioManager.button_pressed.play()
 	destroy_ad_view()
-	SceneSwitcher.change_scene("res://assets/settings.tscn")
+	if GameSession.is_campaign():
+		SceneSwitcher.change_scene("res://assets/level_select.tscn")
+	else:
+		SceneSwitcher.change_scene("res://assets/settings.tscn")
 
 
 func destroy_ad_view() -> void:

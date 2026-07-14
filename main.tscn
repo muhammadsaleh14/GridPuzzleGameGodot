@@ -62,6 +62,14 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 4
 
+[node name="LevelTitle" type="Label" parent="SafeArea/RootVBox/TopBar/PhaseColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 1, 0.8)
+theme_override_font_sizes/font_size = 18
+text = "Level"
+horizontal_alignment = 1
+
 [node name="Label" type="Label" parent="SafeArea/RootVBox/TopBar/PhaseColumn"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -173,7 +181,7 @@ text = "Submit"
 [node name="ReplayButton" type="Button" parent="SafeArea/RootVBox/ActionBar"]
 unique_name_in_owner = true
 visible = false
-custom_minimum_size = Vector2(150, 60)
+custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Replay"
@@ -181,10 +189,26 @@ text = "Replay"
 [node name="RestartButton" type="Button" parent="SafeArea/RootVBox/ActionBar"]
 unique_name_in_owner = true
 visible = false
-custom_minimum_size = Vector2(150, 60)
+custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Play Again"
+text = "Retry"
+
+[node name="NextButton" type="Button" parent="SafeArea/RootVBox/ActionBar"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Next"
+
+[node name="LevelsButton" type="Button" parent="SafeArea/RootVBox/ActionBar"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Levels"
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
@@ -195,4 +219,6 @@ one_shot = true
 [connection signal="pressed" from="SafeArea/RootVBox/ActionBar/SubmitButton" to="." method="_on_submit_button_pressed"]
 [connection signal="pressed" from="SafeArea/RootVBox/ActionBar/ReplayButton" to="." method="_on_replay_button_pressed"]
 [connection signal="pressed" from="SafeArea/RootVBox/ActionBar/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="SafeArea/RootVBox/ActionBar/NextButton" to="." method="_on_next_button_pressed"]
+[connection signal="pressed" from="SafeArea/RootVBox/ActionBar/LevelsButton" to="." method="_on_levels_button_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -24,6 +24,13 @@ var _updating_ui := false
 
 
 func _ready() -> void:
+	GameSession.reload_progress()
+	if not GameSession.progress.is_free_play_unlocked():
+		SceneSwitcher.change_scene("res://assets/main_menu.tscn")
+		return
+
+	GameSession.start_free_play()
+
 	rows = settings.get_rows()
 	columns = settings.get_columns()
 	time = settings.get_time()
@@ -138,6 +145,14 @@ func _on_space_slider_value_changed(value) -> void:
 func _on_back_button_pressed() -> void:
 	AudioManager.button_pressed.play()
 	SceneSwitcher.change_scene("res://assets/main_menu.tscn")
+
+
+func _on_start_free_play_pressed() -> void:
+	AudioManager.button_pressed.play()
+	if not GameSession.start_free_play():
+		SceneSwitcher.change_scene("res://assets/main_menu.tscn")
+		return
+	SceneSwitcher.change_scene("res://main.tscn")
 
 
 func _notification(what) -> void:

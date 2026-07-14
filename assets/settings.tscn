@@ -331,6 +331,12 @@ placement = 1
 separation = 0
 metadata/_edit_initialized_ = true
 
+[node name="StartFreePlay" type="Button" parent="SafeArea/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+text = "Start Free Play"
+
 [node name="BackButton" type="Button" parent="SafeArea/VBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 64)
@@ -342,4 +348,5 @@ text = "Back to Menu"
 [connection signal="value_changed" from="SafeArea/VBox/Scroll/Card/Rows/ColumnsBlock/ColumnSlider" to="." method="_on_column_slider_value_changed"]
 [connection signal="value_changed" from="SafeArea/VBox/Scroll/Card/Rows/RowsBlock/RowSlider" to="." method="_on_row_slider_value_changed"]
 [connection signal="value_changed" from="SafeArea/VBox/Scroll/Card/Rows/SpaceBlock/SpaceSlider" to="." method="_on_space_slider_value_changed"]
+[connection signal="pressed" from="SafeArea/VBox/StartFreePlay" to="." method="_on_start_free_play_pressed"]
 [connection signal="pressed" from="SafeArea/VBox/BackButton" to="." method="_on_back_button_pressed"]

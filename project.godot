@@ -25,6 +25,7 @@ config/icon="res://icon.svg"
 AudioManager="*res://assets/audio_manager.tscn"
 GlobalStates="*res://Globals/globalStates.gd"
 SceneSwitcher="*res://scripts/scene_switcher.gd"
+GameSession="*res://Globals/game_session.gd"
 
 [display]
 

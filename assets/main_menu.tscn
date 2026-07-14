@@ -137,6 +137,12 @@ custom_minimum_size = Vector2(280, 72)
 layout_mode = 2
 text = "Play"
 
+[node name="FreePlay" type="Button" parent="SafeArea/VBox/MenuPanel/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 64)
+layout_mode = 2
+text = "Free Play"
+
 [node name="Settings" type="Button" parent="SafeArea/VBox/MenuPanel/Buttons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 64)
@@ -144,12 +150,14 @@ layout_mode = 2
 text = "Settings"
 
 [node name="Hint" type="Label" parent="SafeArea/VBox"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.55)
 theme_override_font_sizes/font_size = 18
-text = "Tip: start with a small grid, then raise the challenge."
+text = "Clear all levels to unlock Free Play."
 horizontal_alignment = 1
 autowrap_mode = 2
 
 [connection signal="pressed" from="SafeArea/VBox/MenuPanel/Buttons/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="SafeArea/VBox/MenuPanel/Buttons/FreePlay" to="." method="_on_free_play_pressed"]
 [connection signal="pressed" from="SafeArea/VBox/MenuPanel/Buttons/Settings" to="." method="_on_settings_pressed"]
