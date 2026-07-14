@@ -12,19 +12,19 @@ var _punch: Tween
 var _material: ShaderMaterial
 
 const COLORS := {
-	TileState.OFF: Color(0.14, 0.08, 0.24, 0.92),
-	TileState.ON: Color(0.98, 0.78, 0.42, 1.0),
+	TileState.OFF: Color(0.12, 0.18, 0.2, 0.92),
+	TileState.ON: Color(0.98, 0.78, 0.32, 1.0),
 	TileState.CORRECT: Color(0.28, 0.82, 0.52, 1.0),
-	TileState.WRONG: Color(0.92, 0.28, 0.32, 1.0),
-	TileState.MISSED: Color(0.35, 0.62, 0.98, 1.0),
+	TileState.WRONG: Color(0.92, 0.32, 0.28, 1.0),
+	TileState.MISSED: Color(0.3, 0.68, 0.92, 1.0),
 }
 
 const RIM := {
-	TileState.OFF: Color(0.55, 0.4, 0.75, 0.35),
-	TileState.ON: Color(1.0, 0.92, 0.7, 0.85),
+	TileState.OFF: Color(0.4, 0.55, 0.52, 0.4),
+	TileState.ON: Color(1.0, 0.92, 0.65, 0.9),
 	TileState.CORRECT: Color(0.7, 1.0, 0.85, 0.8),
-	TileState.WRONG: Color(1.0, 0.7, 0.7, 0.75),
-	TileState.MISSED: Color(0.75, 0.9, 1.0, 0.8),
+	TileState.WRONG: Color(1.0, 0.7, 0.65, 0.75),
+	TileState.MISSED: Color(0.7, 0.9, 1.0, 0.8),
 }
 
 

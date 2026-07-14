@@ -2,8 +2,8 @@ shader_type canvas_item;
 
 /// Soft rounded tile face with rim light. COLOR.rgb drives the base tint from the node modulate.
 
-uniform vec4 face_color : source_color = vec4(0.22, 0.12, 0.36, 1.0);
-uniform vec4 rim_color : source_color = vec4(0.85, 0.65, 1.0, 0.55);
+uniform vec4 face_color : source_color = vec4(0.12, 0.18, 0.2, 1.0);
+uniform vec4 rim_color : source_color = vec4(0.95, 0.75, 0.35, 0.55);
 uniform float corner_radius = 0.18;
 uniform float rim_width = 0.07;
 uniform float gloss = 0.22;

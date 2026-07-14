@@ -35,7 +35,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.04, 0.02, 0.08, 0.25)
+color = Color(0.03, 0.06, 0.07, 0.25)
 
 [node name="SafeArea" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -65,7 +65,7 @@ theme_override_constants/separation = 4
 [node name="LevelTitle" type="Label" parent="SafeArea/RootVBox/TopBar/PhaseColumn"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.9, 1, 0.8)
+theme_override_colors/font_color = Color(0.95, 0.96, 0.92, 0.8)
 theme_override_font_sizes/font_size = 18
 text = "Level"
 horizontal_alignment = 1
@@ -109,7 +109,7 @@ layout_mode = 2
 
 [node name="TapTap" type="Label" parent="SafeArea/RootVBox/TapContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.75, 0.62, 1, 1)
+theme_override_colors/font_color = Color(0.45, 0.85, 0.7, 1)
 theme_override_font_sizes/font_size = 18
 text = "Auto-tap speed"
 horizontal_alignment = 1
