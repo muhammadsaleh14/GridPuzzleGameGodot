@@ -1,0 +1,18 @@
+[gd_resource type="StyleBoxFlat" format=3 uid="uid://bq8ui_btn_pressed"]
+
+[resource]
+content_margin_left = 36.0
+content_margin_top = 24.0
+content_margin_right = 36.0
+content_margin_bottom = 20.0
+bg_color = Color(0.16, 0.03, 0.22, 1)
+skew = Vector2(0.12, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.65, 0.4, 0.9, 0.7)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4

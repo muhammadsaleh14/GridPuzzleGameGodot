@@ -1,12 +1,12 @@
-[gd_scene load_steps=16 format=3 uid="uid://b7bkq10h20ttv"]
+[gd_scene load_steps=13 format=3 uid="uid://b7bkq10h20ttv"]
 
 [ext_resource type="Script" path="res://scripts/settings.gd" id="1_r7hsq"]
 [ext_resource type="Texture2D" uid="uid://blpsmfngmy7g0" path="res://textures/block.tres" id="2_2tbdu"]
 [ext_resource type="Script" path="res://addons/SliderLabel/SliderLabel.gd" id="2_d0ghn"]
 [ext_resource type="Texture2D" uid="uid://bjptq6wfur60r" path="res://textures/gradient_orange_to_green.tres" id="2_pnagr"]
-[ext_resource type="StyleBox" uid="uid://jdfreqpcqif6" path="res://styles/purple_button_style.tres" id="3_1du5w"]
 [ext_resource type="Theme" uid="uid://d16l6kwqf0nby" path="res://fontTheme/new_theme.tres" id="3_ob386"]
-[ext_resource type="StyleBox" uid="uid://c4hwedaw5iiap" path="res://styles/settings_label_style.tres" id="5_4wc8p"]
+[ext_resource type="StyleBox" path="res://styles/panel_card.tres" id="4_panel"]
+[ext_resource type="StyleBox" path="res://styles/hud_badge.tres" id="5_badge"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_geg0i"]
 particles_animation = true
@@ -17,7 +17,6 @@ particles_anim_loop = false
 [sub_resource type="Gradient" id="Gradient_we8ne"]
 offsets = PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.6, 0.9, 0.989011, 1)
 colors = PackedColorArray(0.109531, 0.691336, 1.92523e-07, 1, 0.164706, 0.654902, 0, 1, 0.223055, 0.618853, 0.242034, 1, 0.623529, 0.0509804, 0.760784, 0.682353, 0.310937, 0.43005, 0.484068, 1, 0.398818, 0.241247, 0.726103, 1, 0.898039, 0, 0.203922, 1, 0.898039, 0, 0.203922, 1, 1, 1, 1, 1)
-metadata/_snap_enabled = true
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_rwu4h"]
 gradient = SubResource("Gradient_we8ne")
@@ -41,21 +40,14 @@ color_ramp = SubResource("GradientTexture1D_rwu4h")
 hue_variation_max = 1.0
 anim_speed_max = 2.0
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8aq3r"]
-content_margin_top = 20.0
-content_margin_bottom = 10.0
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_duk47"]
-content_margin_top = 20.0
-content_margin_bottom = 10.0
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5hoa2"]
-content_margin_top = 20.0
-content_margin_bottom = 10.0
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gudb2"]
-content_margin_top = 20.0
-content_margin_bottom = 10.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slider"]
+content_margin_top = 18.0
+content_margin_bottom = 18.0
+bg_color = Color(1, 1, 1, 0.12)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="Settings" type="Control"]
 layout_mode = 3
@@ -64,6 +56,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("3_ob386")
 script = ExtResource("1_r7hsq")
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -74,73 +67,146 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_pnagr")
+expand_mode = 1
 
-[node name="Node2D" type="Node2D" parent="."]
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="Node2D"]
-material = SubResource("CanvasItemMaterial_geg0i")
-position = Vector2(363, -3.8147e-06)
-scale = Vector2(-2.2141, -0.159171)
-amount = 60
-process_material = SubResource("ParticleProcessMaterial_m36al")
-texture = ExtResource("2_2tbdu")
-lifetime = 7.0
-preprocess = 10.0
-
-[node name="MarginContainer2" type="MarginContainer" parent="."]
-layout_mode = 0
-offset_left = 226.0
-offset_right = 481.0
-offset_bottom = 209.0
-theme_override_constants/margin_top = 40
-
-[node name="Label" type="Label" parent="MarginContainer2"]
-layout_mode = 2
-theme_override_styles/normal = ExtResource("3_1du5w")
-text = "Settings"
-
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="DimOverlay" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_right = 20
+mouse_filter = 2
+color = Color(0.04, 0.02, 0.08, 0.35)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 4
+[node name="Particles" type="Node2D" parent="."]
 
-[node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_top = 8
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Particles"]
+material = SubResource("CanvasItemMaterial_geg0i")
+position = Vector2(360, 0)
+amount = 45
+process_material = SubResource("ParticleProcessMaterial_m36al")
+texture = ExtResource("2_2tbdu")
+lifetime = 7.0
+preprocess = 4.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer4"]
-layout_mode = 2
+[node name="SafeArea" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 36
 
-[node name="Time" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer4/VBoxContainer"]
+[node name="VBox" type="VBoxContainer" parent="SafeArea"]
 layout_mode = 2
-theme = ExtResource("3_ob386")
-theme_override_styles/normal = ExtResource("5_4wc8p")
-text = "Time"
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="SafeArea/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 42
+theme_override_styles/normal = ExtResource("5_badge")
+text = "SETTINGS"
 horizontal_alignment = 1
 
-[node name="TimeSlider" type="HSlider" parent="MarginContainer/VBoxContainer/MarginContainer4/VBoxContainer"]
+[node name="Summary" type="Label" parent="SafeArea/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_styles/slider = SubResource("StyleBoxEmpty_8aq3r")
+theme_override_colors/font_color = Color(0.95, 0.9, 1, 0.8)
+theme_override_font_sizes/font_size = 20
+text = "5×5 grid · 7 tiles · 3s"
+horizontal_alignment = 1
+
+[node name="Scroll" type="ScrollContainer" parent="SafeArea/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Card" type="PanelContainer" parent="SafeArea/VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = ExtResource("4_panel")
+
+[node name="Rows" type="VBoxContainer" parent="SafeArea/VBox/Scroll/Card"]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="TimeBlock" type="VBoxContainer" parent="SafeArea/VBox/Scroll/Card/Rows"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Time" type="Label" parent="SafeArea/VBox/Scroll/Card/Rows/TimeBlock"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Memorize time"
+horizontal_alignment = 1
+
+[node name="TimeHint" type="Label" parent="SafeArea/VBox/Scroll/Card/Rows/TimeBlock"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.5)
+theme_override_font_sizes/font_size = 16
+text = "How long the pattern stays visible"
+horizontal_alignment = 1
+
+[node name="TimeSlider" type="HSlider" parent="SafeArea/VBox/Scroll/Card/Rows/TimeBlock"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/slider = SubResource("StyleBoxFlat_slider")
+min_value = 1.0
+max_value = 30.0
+value = 3.0
+rounded = true
+
+[node name="SliderLabel" type="Label" parent="SafeArea/VBox/Scroll/Card/Rows/TimeBlock/TimeSlider"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+size_flags_horizontal = 4
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_d0ghn")
+visibility_rule = 3
+placement = 1
+separation = 0
+metadata/_edit_initialized_ = true
+
+[node name="BoxesBlock" type="VBoxContainer" parent="SafeArea/VBox/Scroll/Card/Rows"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BoxesHighlighted" type="Label" parent="SafeArea/VBox/Scroll/Card/Rows/BoxesBlock"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Highlighted tiles"
+horizontal_alignment = 1
+
+[node name="BoxesHint" type="Label" parent="SafeArea/VBox/Scroll/Card/Rows/BoxesBlock"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.5)
+theme_override_font_sizes/font_size = 16
+text = "How many tiles light up in the pattern"
+horizontal_alignment = 1
+
+[node name="BoxesSlider" type="HSlider" parent="SafeArea/VBox/Scroll/Card/Rows/BoxesBlock"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/slider = SubResource("StyleBoxFlat_slider")
 min_value = 1.0
 max_value = 25.0
-value = 1.0
+value = 7.0
+rounded = true
 
-[node name="SliderLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer4/VBoxContainer/TimeSlider"]
-layout_mode = 2
-offset_left = 146.0
-offset_top = 20.0
-offset_right = 174.0
-offset_bottom = 43.0
+[node name="SliderLabel" type="Label" parent="SafeArea/VBox/Scroll/Card/Rows/BoxesBlock/BoxesSlider"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
 size_flags_horizontal = 4
 text = "100"
 horizontal_alignment = 1
@@ -151,110 +217,36 @@ placement = 1
 separation = 0
 metadata/_edit_initialized_ = true
 
-[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+[node name="GridHeader" type="Label" parent="SafeArea/VBox/Scroll/Card/Rows"]
 layout_mode = 2
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_bottom = 50
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer3"]
-layout_mode = 2
-
-[node name="BoxesHighlighted" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
-layout_mode = 2
-theme_override_styles/normal = ExtResource("5_4wc8p")
-text = "Boxes Highlighted"
+theme_override_font_sizes/font_size = 22
+text = "GRID SIZE"
 horizontal_alignment = 1
 
-[node name="BoxesSlider" type="HSlider" parent="MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="ColumnsBlock" type="VBoxContainer" parent="SafeArea/VBox/Scroll/Card/Rows"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Columns" type="Label" parent="SafeArea/VBox/Scroll/Card/Rows/ColumnsBlock"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_styles/slider = SubResource("StyleBoxEmpty_duk47")
-ticks_on_borders = true
-
-[node name="SliderLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/BoxesSlider"]
-layout_mode = 2
-offset_left = 146.0
-offset_top = 20.0
-offset_right = 174.0
-offset_bottom = 43.0
-size_flags_horizontal = 4
-text = "100"
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("2_d0ghn")
-visibility_rule = 3
-placement = 1
-separation = 0
-metadata/_edit_initialized_ = true
-
-[node name="GridSize" type="Label" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 1
-text = "Grid Size"
-horizontal_alignment = 1
-uppercase = true
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_top = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="Columns" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_styles/normal = ExtResource("5_4wc8p")
+theme_override_font_sizes/font_size = 24
 text = "Columns"
 horizontal_alignment = 1
 
-[node name="ColumnSlider" type="HSlider" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="ColumnSlider" type="HSlider" parent="SafeArea/VBox/Scroll/Card/Rows/ColumnsBlock"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_styles/slider = SubResource("StyleBoxEmpty_5hoa2")
-max_value = 25.0
+theme_override_styles/slider = SubResource("StyleBoxFlat_slider")
+min_value = 1.0
+max_value = 20.0
+value = 5.0
+rounded = true
 
-[node name="SliderLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ColumnSlider"]
-layout_mode = 2
-offset_left = 146.0
-offset_top = 20.0
-offset_right = 174.0
-offset_bottom = 43.0
-size_flags_horizontal = 4
-text = "100"
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("2_d0ghn")
-visibility_rule = 3
-placement = 1
-separation = 0
-metadata/_edit_initialized_ = true
-
-[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_bottom = 40
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer2"]
-layout_mode = 2
-
-[node name="Rows" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
-layout_mode = 2
-theme_override_styles/normal = ExtResource("5_4wc8p")
-text = "Rows     "
-horizontal_alignment = 1
-
-[node name="RowSlider" type="HSlider" parent="MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_styles/slider = SubResource("StyleBoxEmpty_gudb2")
-max_value = 50.0
-
-[node name="SliderLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RowSlider"]
+[node name="SliderLabel" type="Label" parent="SafeArea/VBox/Scroll/Card/Rows/ColumnsBlock/ColumnSlider"]
 layout_mode = 0
-offset_left = 146.0
-offset_top = 20.0
-offset_right = 174.0
-offset_bottom = 43.0
+offset_right = 40.0
+offset_bottom = 23.0
 size_flags_horizontal = 4
 text = "100"
 horizontal_alignment = 1
@@ -265,32 +257,30 @@ placement = 1
 separation = 0
 metadata/_edit_initialized_ = true
 
-[node name="MarginContainer6" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+[node name="RowsBlock" type="VBoxContainer" parent="SafeArea/VBox/Scroll/Card/Rows"]
 layout_mode = 2
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_bottom = 40
+theme_override_constants/separation = 6
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer6"]
-layout_mode = 2
-
-[node name="Space" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer6/VBoxContainer"]
-layout_mode = 2
-theme_override_styles/normal = ExtResource("5_4wc8p")
-text = "Space"
-horizontal_alignment = 1
-
-[node name="SpaceSlider" type="HSlider" parent="MarginContainer/VBoxContainer/MarginContainer6/VBoxContainer"]
+[node name="Rows" type="Label" parent="SafeArea/VBox/Scroll/Card/Rows/RowsBlock"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_styles/slider = SubResource("StyleBoxEmpty_gudb2")
-max_value = 50.0
+theme_override_font_sizes/font_size = 24
+text = "Rows"
+horizontal_alignment = 1
 
-[node name="SliderLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer6/VBoxContainer/SpaceSlider"]
+[node name="RowSlider" type="HSlider" parent="SafeArea/VBox/Scroll/Card/Rows/RowsBlock"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/slider = SubResource("StyleBoxFlat_slider")
+min_value = 1.0
+max_value = 30.0
+value = 5.0
+rounded = true
+
+[node name="SliderLabel" type="Label" parent="SafeArea/VBox/Scroll/Card/Rows/RowsBlock/RowSlider"]
 layout_mode = 0
-offset_left = 146.0
-offset_top = 20.0
-offset_right = 174.0
-offset_bottom = 43.0
+offset_right = 40.0
+offset_bottom = 23.0
 size_flags_horizontal = 4
 text = "100"
 horizontal_alignment = 1
@@ -301,20 +291,55 @@ placement = 1
 separation = 0
 metadata/_edit_initialized_ = true
 
-[node name="MarginContainer5" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+[node name="SpaceBlock" type="VBoxContainer" parent="SafeArea/VBox/Scroll/Card/Rows"]
 layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Space" type="Label" parent="SafeArea/VBox/Scroll/Card/Rows/SpaceBlock"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Tile gap"
+horizontal_alignment = 1
+
+[node name="SpaceHint" type="Label" parent="SafeArea/VBox/Scroll/Card/Rows/SpaceBlock"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.5)
+theme_override_font_sizes/font_size = 16
+text = "Spacing between tiles on the board"
+horizontal_alignment = 1
+
+[node name="SpaceSlider" type="HSlider" parent="SafeArea/VBox/Scroll/Card/Rows/SpaceBlock"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/slider = SubResource("StyleBoxFlat_slider")
+max_value = 40.0
+value = 5.0
+rounded = true
+
+[node name="SliderLabel" type="Label" parent="SafeArea/VBox/Scroll/Card/Rows/SpaceBlock/SpaceSlider"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
 size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/margin_top = 55
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_d0ghn")
+visibility_rule = 3
+placement = 1
+separation = 0
+metadata/_edit_initialized_ = true
 
-[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer5"]
+[node name="BackButton" type="Button" parent="SafeArea/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
-theme_override_styles/normal = ExtResource("3_1du5w")
-text = "< Go Back "
+text = "Back to Menu"
 
-[connection signal="value_changed" from="MarginContainer/VBoxContainer/MarginContainer4/VBoxContainer/TimeSlider" to="." method="_on_time_slider_value_changed"]
-[connection signal="value_changed" from="MarginContainer/VBoxContainer/MarginContainer3/VBoxContainer/BoxesSlider" to="." method="_on_boxes_slider_value_changed"]
-[connection signal="value_changed" from="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ColumnSlider" to="." method="_on_column_slider_value_changed"]
-[connection signal="value_changed" from="MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/RowSlider" to="." method="_on_row_slider_value_changed"]
-[connection signal="value_changed" from="MarginContainer/VBoxContainer/MarginContainer6/VBoxContainer/SpaceSlider" to="." method="_on_space_slider_value_changed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer5/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="value_changed" from="SafeArea/VBox/Scroll/Card/Rows/TimeBlock/TimeSlider" to="." method="_on_time_slider_value_changed"]
+[connection signal="value_changed" from="SafeArea/VBox/Scroll/Card/Rows/BoxesBlock/BoxesSlider" to="." method="_on_boxes_slider_value_changed"]
+[connection signal="value_changed" from="SafeArea/VBox/Scroll/Card/Rows/ColumnsBlock/ColumnSlider" to="." method="_on_column_slider_value_changed"]
+[connection signal="value_changed" from="SafeArea/VBox/Scroll/Card/Rows/RowsBlock/RowSlider" to="." method="_on_row_slider_value_changed"]
+[connection signal="value_changed" from="SafeArea/VBox/Scroll/Card/Rows/SpaceBlock/SpaceSlider" to="." method="_on_space_slider_value_changed"]
+[connection signal="pressed" from="SafeArea/VBox/BackButton" to="." method="_on_back_button_pressed"]

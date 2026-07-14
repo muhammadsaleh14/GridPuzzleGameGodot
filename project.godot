@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="GridPuzzle"
+config/name="Grid Puzzle"
 run/main_scene="res://assets/main_menu.tscn"
 config/quit_on_go_back=false
 config/features=PackedStringArray("4.3", "Mobile")
@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 
 AudioManager="*res://assets/audio_manager.tscn"
 GlobalStates="*res://Globals/globalStates.gd"
+SceneSwitcher="*res://scripts/scene_switcher.gd"
 
 [display]
 

@@ -1,0 +1,21 @@
+[gd_resource type="StyleBoxFlat" format=3 uid="uid://bq8ui_btn_normal"]
+
+[resource]
+content_margin_left = 36.0
+content_margin_top = 22.0
+content_margin_right = 36.0
+content_margin_bottom = 22.0
+bg_color = Color(0.243137, 0.0431373, 0.321569, 0.95)
+skew = Vector2(0.18, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.85, 0.55, 1, 0.55)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_size = 6
+shadow_offset = Vector2(0, 4)
