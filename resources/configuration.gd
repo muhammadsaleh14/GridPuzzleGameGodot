@@ -61,6 +61,3 @@ func _set(property, value):
 		config.set_value("user",space_string,value)
 
 	config.save("user://config.cfg")
-
-
-

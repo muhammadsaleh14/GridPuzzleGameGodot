@@ -128,4 +128,3 @@ func _on_back_button_pressed():
 func _notification(what):
 	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
 		get_tree().change_scene_to_file("res://assets/main_menu.tscn")
-

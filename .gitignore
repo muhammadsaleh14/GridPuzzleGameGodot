@@ -5,7 +5,9 @@
 .import/
 export.cfg
 export_presets.cfg
-exports
+
+# Release builds (desktop exe + mobile apk/aab)
+exports/
 
 # Imported translations (automatically generated from CSV files)
 *.translation
@@ -15,5 +17,16 @@ exports
 data_*/
 mono_crash.*.json
 
-android
-GridPuzzle.exe
+# Godot Android build output
+android/
+
+# Secrets and crash dumps
+*.keystore
+hs_err_pid*.log
+
+# Loose build artifacts at repo root (prefer exports/)
+*.exe
+*.pck
+*.apk
+*.aab
+*.idsig

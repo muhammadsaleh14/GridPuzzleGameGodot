@@ -293,9 +293,3 @@ func destroy_ad_view() -> void:
 		#always call this method on all AdFormats to free memory on Android/iOS
 		_ad_view.destroy()
 		_ad_view = null
-
-
-
-
-
-

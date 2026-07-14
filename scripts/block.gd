@@ -46,4 +46,3 @@ func wrong_selection_mask():
 	texture_sprite.material.shader = wrong_selection
 func missed_selection_mask():
 	texture_sprite.material.shader = missed_selection
-
