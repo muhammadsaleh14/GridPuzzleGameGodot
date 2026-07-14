@@ -2,22 +2,40 @@ extends Control
 
 signal pressed
 
-@onready var texture_rect: TextureRect = $TextureRect
+enum TileState { OFF, ON, CORRECT, WRONG, MISSED }
+
+@onready var face: ColorRect = $Face
 @onready var hit_button: Button = $HitButton
 
-var InvertShader = preload("res://shaders/block.gdshader")
-var wrong_selection = preload("res://shaders/wrong_selection.gdshader")
-var missed_selection = preload("res://shaders/missed_selection.gdshader")
-var correct_selection = preload("res://shaders/correct_selection.gdshader")
-
+var _state: TileState = TileState.OFF
 var _punch: Tween
+var _material: ShaderMaterial
+
+const COLORS := {
+	TileState.OFF: Color(0.14, 0.08, 0.24, 0.92),
+	TileState.ON: Color(0.98, 0.78, 0.42, 1.0),
+	TileState.CORRECT: Color(0.28, 0.82, 0.52, 1.0),
+	TileState.WRONG: Color(0.92, 0.28, 0.32, 1.0),
+	TileState.MISSED: Color(0.35, 0.62, 0.98, 1.0),
+}
+
+const RIM := {
+	TileState.OFF: Color(0.55, 0.4, 0.75, 0.35),
+	TileState.ON: Color(1.0, 0.92, 0.7, 0.85),
+	TileState.CORRECT: Color(0.7, 1.0, 0.85, 0.8),
+	TileState.WRONG: Color(1.0, 0.7, 0.7, 0.75),
+	TileState.MISSED: Color(0.75, 0.9, 1.0, 0.8),
+}
 
 
 func _ready() -> void:
-	texture_rect.material = ShaderMaterial.new()
-	texture_rect.material.shader = null
+	var shader := preload("res://shaders/tile_face.gdshader")
+	_material = ShaderMaterial.new()
+	_material.shader = shader
+	face.material = _material
 	hit_button.pressed.connect(func(): pressed.emit())
 	resized.connect(_on_resized)
+	_apply_visual(false)
 
 
 func _on_resized() -> void:
@@ -31,39 +49,61 @@ func set_cell_size(cell: float) -> void:
 
 
 func enable() -> void:
-	texture_rect.material.shader = null
-	_punch_scale(1.06)
+	_set_state(TileState.ON)
+	_punch_scale(1.08)
 
 
 func disable() -> void:
-	texture_rect.material.shader = InvertShader
+	_set_state(TileState.OFF)
 
 
 func toggle() -> void:
-	AudioManager.toggle_block.play()
-	if texture_rect.material.shader == InvertShader:
-		texture_rect.material.shader = null
+	AudioManager.play_tile_toggle()
+	if _state == TileState.OFF:
+		_set_state(TileState.ON)
 	else:
-		texture_rect.material.shader = InvertShader
-	_punch_scale(1.1)
+		_set_state(TileState.OFF)
+	_punch_scale(1.12)
 
 
 func is_enabled() -> bool:
-	return texture_rect.material.shader != InvertShader
+	return _state == TileState.ON
 
 
 func correct_selection_mask() -> void:
-	texture_rect.material.shader = correct_selection
-	_punch_scale(1.05)
+	_set_state(TileState.CORRECT)
+	_punch_scale(1.06)
 
 
 func wrong_selection_mask() -> void:
-	texture_rect.material.shader = wrong_selection
-	_punch_scale(0.94)
+	_set_state(TileState.WRONG)
+	_punch_scale(0.92)
 
 
 func missed_selection_mask() -> void:
-	texture_rect.material.shader = missed_selection
+	_set_state(TileState.MISSED)
+	_punch_scale(1.04)
+
+
+func _set_state(new_state: TileState) -> void:
+	_state = new_state
+	_apply_visual(true)
+
+
+func _apply_visual(animate: bool) -> void:
+	if _material == null:
+		return
+	var face_col: Color = COLORS[_state]
+	var rim_col: Color = RIM[_state]
+	var glow := 1.0 if _state != TileState.OFF else 0.0
+	_material.set_shader_parameter("face_color", face_col)
+	_material.set_shader_parameter("rim_color", rim_col)
+	_material.set_shader_parameter("enabled_glow", glow)
+	_material.set_shader_parameter("gloss", 0.28 if _state != TileState.OFF else 0.12)
+	if animate:
+		modulate = Color(1.15, 1.15, 1.15, 1.0)
+		var tween := create_tween()
+		tween.tween_property(self, "modulate", Color.WHITE, 0.12)
 
 
 func _punch_scale(peak: float) -> void:
@@ -73,4 +113,4 @@ func _punch_scale(peak: float) -> void:
 	scale = Vector2.ONE
 	_punch = create_tween()
 	_punch.tween_property(self, "scale", Vector2(peak, peak), 0.07)
-	_punch.tween_property(self, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	_punch.tween_property(self, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)

@@ -342,6 +342,7 @@ func memorise() -> void:
 	timer.wait_time = level_time
 	timer.start()
 	time_left = 0
+	AudioManager.play_phase()
 	highlight_blocks()
 	_flash_phase_label()
 
