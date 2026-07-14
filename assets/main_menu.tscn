@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dko01urihrmd0"]
+[gd_scene load_steps=12 format=3 uid="uid://dko01urihrmd0"]
 
 [ext_resource type="Texture2D" uid="uid://blpsmfngmy7g0" path="res://textures/block.tres" id="1_6hca5"]
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_8447g"]
@@ -6,6 +6,7 @@
 [ext_resource type="Theme" uid="uid://d16l6kwqf0nby" path="res://fontTheme/new_theme.tres" id="3_xy72n"]
 [ext_resource type="StyleBox" path="res://styles/panel_card.tres" id="4_panel"]
 [ext_resource type="StyleBox" path="res://styles/hud_badge.tres" id="5_badge"]
+[ext_resource type="PackedScene" path="res://assets/floating_artifacts.tscn" id="6_float"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_enbc7"]
 particles_animation = true
@@ -78,6 +79,10 @@ amount = 50
 process_material = SubResource("ParticleProcessMaterial_esn15")
 texture = ExtResource("1_6hca5")
 lifetime = 7.0
+
+[node name="FloatingArtifacts" parent="." instance=ExtResource("6_float")]
+artifact_count = 16
+base_alpha = 0.16
 
 [node name="SafeArea" type="MarginContainer" parent="."]
 layout_mode = 1

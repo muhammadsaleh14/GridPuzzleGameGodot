@@ -1,10 +1,11 @@
-[gd_scene format=3 uid="uid://dn2nfoj28w3ii"]
+[gd_scene load_steps=7 format=3 uid="uid://dn2nfoj28w3ii"]
 
 [ext_resource type="Script" path="res://scripts/level_select.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://bjptq6wfur60r" path="res://textures/gradient_orange_to_green.tres" id="2_grad"]
 [ext_resource type="Theme" uid="uid://d16l6kwqf0nby" path="res://fontTheme/new_theme.tres" id="3_theme"]
 [ext_resource type="StyleBox" path="res://styles/panel_card.tres" id="4_panel"]
 [ext_resource type="StyleBox" path="res://styles/hud_badge.tres" id="5_badge"]
+[ext_resource type="PackedScene" path="res://assets/floating_artifacts.tscn" id="6_float"]
 
 [node name="LevelSelect" type="Control"]
 layout_mode = 3
@@ -36,6 +37,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0.03, 0.06, 0.07, 0.35)
+
+[node name="FloatingArtifacts" parent="." instance=ExtResource("6_float")]
+artifact_count = 14
+base_alpha = 0.13
 
 [node name="SafeArea" type="MarginContainer" parent="."]
 layout_mode = 1
